@@ -23,7 +23,7 @@ void calculateTurnAroundTime( int processes[], int n, int burst_time[], int wait
 	for( int i = 0; i < n; i++)
 	{
 		int j = 0;
-		for(; TurnaroundTime[j].process != 0; j++) 
+		for(; TurnaroundTime[j].process != 0; j++)
 		{
 			if( TurnaroundTime[j].process == processes[i] )
 			{
@@ -54,7 +54,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 	for( int i = 0; i < n; i++)
 	{
 		int j = 0;
-		for(; WaitingTime[j].process != 0; j++) 
+		for(; WaitingTime[j].process != 0; j++)
 		{
 			if( WaitingTime[j].process == processes[i] )
 				break;
@@ -66,23 +66,23 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 		}
 	}
 }
- 
+
 // function to calculate times according to FCFS
 void calculateFCFS( int n, int *processes, int *burst_time)
 {
     int wait_time[n], turnaround_time[n], total_wt = 0, total_tat = 0;
     float sum = 0;
 
-	struct SProcessTime WaitingTime[MAX_PROCESSES]; 
-	struct SProcessTime TurnaroundTime[MAX_PROCESSES];  
-	
+	struct SProcessTime WaitingTime[MAX_PROCESSES];
+	struct SProcessTime TurnaroundTime[MAX_PROCESSES];
+
 
 	memset( WaitingTime, 0, sizeof ( WaitingTime));
 	memset( TurnaroundTime, 0, sizeof( TurnaroundTime));
 
     calculateWaitingTime(processes, n, burst_time, wait_time, WaitingTime);
     calculateTurnAroundTime(processes, n, burst_time, wait_time, turnaround_time, TurnaroundTime);
- 
+
 
 	int total_processes = 0;
 	for( int j = 0; WaitingTime[j].process != 0; j++)
@@ -93,7 +93,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 	}
  	for(int i = 0; i < total_processes; i++){
 	sum = sum + *burst_time;
-	
+
 	}
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
@@ -108,36 +108,35 @@ void readFile( FILE *fp, int *n, int **processes, int **burst_time)
 {
 	//cout << fp << endl;
 	char *line;
-	
+
 	size_t  len = MAX_LINE;
 	line = (char *) malloc( MAX_LINE);
-	
+
 	int ret = getline( &line, &len, fp);
 	if( ret == -1)
-	{	
+	{
 		return;
 	}
-	
+
 	ret = getline( &line, &len, fp);
 	if( ret == -1)
-	{	
+	{
 		return;
 	}
-	
+
 	int p, N;
 	sscanf(line, "%d %d", &p, &N);
-	
-	
+
 	*n = N;
-	
+
 	*processes = (int *) malloc( sizeof( int ) * N);
 	*burst_time = (int *) malloc( sizeof( int ) * N);
-	
+
 	for ( int i = 0; i < N; i++)
 	{
 		ret = getline( &line, &len, fp);
 		if( ret == -1)
-		{	
+		{
 			return;
 		}
 		int a, b, c;
@@ -146,7 +145,7 @@ void readFile( FILE *fp, int *n, int **processes, int **burst_time)
 		(*burst_time)[i] = b;
 	}
 	fclose(fp);
-	
+
 }
 
 int main( int argc, char *argv[])
@@ -155,7 +154,7 @@ int main( int argc, char *argv[])
     int n= 0;
     int  *burst_time;
 	FILE *fp;
-	if( argc == 1) 
+	if( argc == 1)
 	{
 		fp = stdin;
 	}
