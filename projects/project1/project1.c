@@ -71,7 +71,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 void calculateFCFS( int n, int *processes, int *burst_time)
 {
     int wait_time[n], turnaround_time[n], total_wt = 0, total_tat = 0;
-
+    float sum = 0;
 
 	struct SProcessTime WaitingTime[MAX_PROCESSES]; 
 	struct SProcessTime TurnaroundTime[MAX_PROCESSES];  
@@ -83,7 +83,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
     calculateWaitingTime(processes, n, burst_time, wait_time, WaitingTime);
     calculateTurnAroundTime(processes, n, burst_time, wait_time, turnaround_time, TurnaroundTime);
  
- 
+
 	int total_processes = 0;
 	for( int j = 0; WaitingTime[j].process != 0; j++)
 	{
@@ -91,13 +91,17 @@ void calculateFCFS( int n, int *processes, int *burst_time)
         total_tat = total_tat + TurnaroundTime[j].time;
 		total_processes++;
 	}
- 
+ 	for(int i = 0; i < total_processes; i++){
+	sum = sum + *burst_time;
+	
+	}
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
+   printf("%.2f\n", (float)total_processes);
+   printf("%.2f\n", (float)total_processes / (float)total_wt);
    printf("%.2f\n", (float)total_tat / (float)total_processes);
    printf("%.2f\n", (float)total_wt / (float)total_processes);
    printf("%.2f\n", (float)total_wt / (float)total_processes);
-
 }
 
 void readFile( FILE *fp, int *n, int **processes, int **burst_time)
@@ -149,7 +153,6 @@ int main( int argc, char *argv[])
 {
     int *processes;
     int n= 0;
- 
     int  *burst_time;
 	FILE *fp;
 	if( argc == 1) 
@@ -164,6 +167,5 @@ int main( int argc, char *argv[])
 	readFile( fp, &n, &processes, &burst_time);
 
     calculateFCFS(n, processes, burst_time);
-    
     return 0;
 }
