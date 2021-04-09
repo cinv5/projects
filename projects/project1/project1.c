@@ -72,7 +72,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 {
     int wait_time[n], turnaround_time[n], total_wt = 0, total_tat = 0;
     float sum = 0;
-
+    double cpu = 100.00;
 	struct SProcessTime WaitingTime[MAX_PROCESSES];
 	struct SProcessTime TurnaroundTime[MAX_PROCESSES];
 
@@ -98,6 +98,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
    printf("%d\n", total_processes);
+   printf("%.2f\n", cpu);
    printf("%.2f\n", (float)total_processes / (float)total_wt);
    printf("%.2f\n", (float)total_tat / (float)total_processes);
    printf("%.2f\n", (float)total_wt / (float)total_processes);
