@@ -1,0 +1,3 @@
+Cin Vaan
+
+To run the program, run make first to compile the c program. From there, use ./project1 < input.txt to work.
