@@ -97,7 +97,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 	}
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
-   printf("%.2f\n", (float)total_processes);
+   printf("%d\n", total_processes);
    printf("%.2f\n", (float)total_processes / (float)total_wt);
    printf("%.2f\n", (float)total_tat / (float)total_processes);
    printf("%.2f\n", (float)total_wt / (float)total_processes);
