@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 const int MAX_PROCESSES = 32;
-const int MAX_LINE      = 128;
+const int MAX_LINE      = 32769;
 
 // Global data structures are used to store the calculated time
 struct SProcessTime { int process, time; };
