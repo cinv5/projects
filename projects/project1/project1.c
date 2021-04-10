@@ -86,7 +86,6 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 	int total_processes = 0;
 	for( int i = 0; WaitingTime[i].process != *processes; i++){
 	sum = total_wt + WaitingTime[i].time;
-	sum++;
 	}
 	for( int j = 0; WaitingTime[j].process != 0; j++)
 	{
