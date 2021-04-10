@@ -43,7 +43,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 {
     // calculating waitingtime for all processes, even ones that are mentioned multiple times
     wait_time[0] = 0;
-    for (int i = 1; i < n ; i++)
+    for (int i = 0; i < n ; i++)
     {
         wait_time[i] =  burst_time[i-1] + wait_time[i-1];
     }
@@ -57,6 +57,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 		{
 			if( WaitingTime[j].process == processes[i] ){
 				WaitingTime[j].time = wait_time[i];
+				//printf("Processor %d: %d", WaitingTime[j].process, processes[i]);
 				break;
 			}
 		}
@@ -72,7 +73,7 @@ void calculateResponseTime( int processes[], int n, int burst_time[], int rp_tim
 {
     // calculate tat by adding burst time and wait time
     rp_time[0] = 0;
-    for (int i = 0; i < n ; i++)
+    for (int i = 1; i < n ; i++)
     {
         rp_time[i] = burst_time[i-1] + rp_time[i-1];
     }
@@ -96,10 +97,11 @@ void calculateResponseTime( int processes[], int n, int burst_time[], int rp_tim
 		}
 	}
 }
+
 // function to calculate times according to FCFS
 void calculateFCFS( int n, int *processes, int *burst_time)
 {
-    int wait_time[n], turnaround_time[n], rp_time[n],total_rt = 0, total_wt = 0, total_tat = 0;
+    int wait_time[n], turnaround_time[n], rp_time[n], total_rt = 0, total_wt = 0, total_tat = 0;
     double cpu = 100.00;
 	struct SProcessTime WaitingTime[MAX_PROCESSES];
 	struct SProcessTime TurnaroundTime[MAX_PROCESSES];
@@ -108,7 +110,6 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 	memset( WaitingTime, 0, sizeof ( WaitingTime));
 	memset( TurnaroundTime, 0, sizeof( TurnaroundTime));
 	memset( ResponseTime, 0, sizeof( ResponseTime));
-
 
     calculateWaitingTime(processes, n, burst_time, wait_time, WaitingTime);
     calculateTurnAroundTime(processes, n, burst_time, wait_time, turnaround_time, TurnaroundTime);
