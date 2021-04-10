@@ -120,7 +120,6 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 	for( int j = 0; WaitingTime[j].process != 0; j++)
 	{
 	if(WaitingTime[j].process == processes[i] ){
-	WaitingTime[j].time = wait_time[i];
 	total_wt = total_wt + WaitingTime[j].time;
 	}
         //total_tat = total_tat + TurnaroundTime[j].time;
