@@ -42,7 +42,7 @@ void calculateTurnAroundTime( int processes[], int n, int burst_time[], int wait
 void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_time[], /*int turnaround_time[],*/ struct SProcessTime *WaitingTime)
 {
     // calculating waitingtime for all processes, even ones that are mentioned multiple times
-    //wait_time[0] = 0;
+    wait_time[0] = 0;
     for (int i = 0; i < n ; i++)
     {
         wait_time[i] =  burst_time[i-1] + wait_time[i-1];
@@ -56,7 +56,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 		for(; WaitingTime[j].process != 0; j++)
 		{
 			if( WaitingTime[j].process == processes[i] ){
-				//WaitingTime[j].time = wait_time[i];
+				WaitingTime[j].time = wait_time[i];
 				//printf("Processor %d: %d", WaitingTime[j].process, processes[i]);
 				break;
 			}
