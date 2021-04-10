@@ -68,13 +68,13 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 	}
 }
 
-void calculateResponseTime( int processes[], int n, int burst_time[], int wait_time[], int rp_time[], struct SProcessTime *ResponseTime)
+void calculateResponseTime( int processes[], int n, int burst_time[], int rp_time[], struct SProcessTime *ResponseTime)
 {
     // calculate tat by adding burst time and wait time
     rp_time[0] = 0;
     for (int i = 0; i < n ; i++)
     {
-        rp_time[i] = burst_time[i-1] + wait_time[i-1];
+        rp_time[i] = burst_time[i-1] + rp_time[i-1];
     }
 
 	// update the global struct which saves the per-process turnaround time
@@ -112,17 +112,21 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 
     calculateWaitingTime(processes, n, burst_time, wait_time, WaitingTime);
     calculateTurnAroundTime(processes, n, burst_time, wait_time, turnaround_time, TurnaroundTime);
-    calculateResponseTime(processes, n, burst_time, wait_time, rp_time, ResponseTime);
+    calculateResponseTime(processes, n, burst_time, rp_time, ResponseTime);
 
 	int total_processes = 0;
 	for( int j = 0; WaitingTime[j].process != 0; j++)
 	{
 	total_wt = total_wt + WaitingTime[j].time;
         total_tat = total_tat + TurnaroundTime[j].time;
-	total_rt = total_rt + ResponseTime[j].time;
+	//total_rt = total_rt + ResponseTime[j].time;
 	total_processes++;
 	}
 
+	for(int j = 0; ResponseTime[j].process != 0; j++)
+	{
+	total_rt = total_rt + ResponseTime[j].time;
+	}
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
    printf("%d\n", total_processes);
