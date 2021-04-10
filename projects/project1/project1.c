@@ -45,7 +45,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
     //wait_time[0] = 0;
     for (int i = 0; i < n ; i++)
     {
-        wait_time[i] =  wait_time[i-1] + burst_time[i-1];
+        wait_time[i] =  burst_time[i-1] + wait_time[i-1];
     }
 
 	// update the global struct which saves the per-process waiting time
@@ -56,7 +56,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 		for(; WaitingTime[j].process != 0; j++)
 		{
 			if( WaitingTime[j].process == processes[i] ){
-				WaitingTime[j].time = wait_time[i];
+				//WaitingTime[j].time = wait_time[i];
 				//printf("Processor %d: %d", WaitingTime[j].process, processes[i]);
 				break;
 			}
@@ -116,7 +116,9 @@ void calculateFCFS( int n, int *processes, int *burst_time)
     calculateResponseTime(processes, n, burst_time, rp_time, ResponseTime);
 
 	int total_processes = 0;
-
+	for(int j = 0; WaitingTime[j].process != 0; j++){
+	total_wt = total_wt + WaitingTime[j].time;
+	}
 
 	for(int j = 0; ResponseTime[j].process != 0; j++)
 	{
