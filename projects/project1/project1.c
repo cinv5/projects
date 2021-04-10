@@ -17,7 +17,6 @@ void calculateTurnAroundTime( int processes[], int n, int burst_time[], int wait
     {
         turnaround_time[i] = burst_time[i] + wait_time[i];
     }
-
 	// update the global struct which saves the per-process turnaround time
 	// logic is that if the entry is already there, then its updated
 	for( int i = 0; i < n; i++)
@@ -94,13 +93,13 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
-   printf("context: %d\n", total_processes);
-   printf("non-context: %d\n", sum);
-   printf("cpu usage: %.2f\n", cpu);
-   printf("throughput: %.2f\n", (double)total_processes / (double)total_wt);
-   printf("turnaround time: %.2f\n", (double)total_tat / (double)total_processes);
-   printf("waiting time: %.2f\n", ((double)total_wt + 2)/ (double)total_processes);
-   printf("response time: %.2f\n", (double)total_wt / (double)total_processes);
+   printf("%d\n", total_processes);
+   printf("%d\n", sum);
+   printf("%.2f\n", cpu);
+   printf("%.2f\n", (double)total_processes / (double)total_wt);
+   printf("%.2f\n", (double)total_tat / (double)total_processes);
+   printf("%.2f\n", ((double)total_wt + 2)/ (double)total_processes);
+   printf("%.2f\n", (double)total_wt / (double)total_processes);
 }
 
 void readFile( FILE *fp, int *n, int **processes, int **burst_time)
