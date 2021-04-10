@@ -116,18 +116,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
     calculateResponseTime(processes, n, burst_time, rp_time, ResponseTime);
 
 	int total_processes = 0;
-	for(int i = 0; i < n; i++){
-	for( int j = 0; WaitingTime[j].process != 0; j++)
-	{
-	if(WaitingTime[j].process == processes[i] ){
-	total_wt = total_wt + WaitingTime[j].time;
-	}
-        //total_tat = total_tat + TurnaroundTime[j].time;
-	//total_rt = total_rt + ResponseTime[j].time;
-	//total_processes+;
-	}
 
-	}
 
 	for(int j = 0; ResponseTime[j].process != 0; j++)
 	{
@@ -138,6 +127,7 @@ void calculateFCFS( int n, int *processes, int *burst_time)
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
    printf("%d\n", total_processes);
+   printf("%d\n", 1);
    printf("%.2f\n", cpu);
    printf("%.2f\n", (double)total_processes / (double)total_rt);
    printf("%.2f\n", (double)total_tat / (double)total_processes);
