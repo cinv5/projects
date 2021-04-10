@@ -43,7 +43,7 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 {
     // calculating waitingtime for all processes, even ones that are mentioned multiple times
     wait_time[0] = 0;
-    for (int i = 0; i < n ; i++)
+    for (int i = 1; i < n ; i++)
     {
         wait_time[i] =  burst_time[i-1] + wait_time[i-1];
     }
