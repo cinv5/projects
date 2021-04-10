@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 const int MAX_PROCESSES = 32;
-const int MAX_LINE      = 32769;
+const int MAX_LINE      = 128;
 
 // Global data structures are used to store the calculated time
 struct SProcessTime { int process, time; };
@@ -55,8 +55,10 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 		int j = 0;
 		for(; WaitingTime[j].process != 0; j++)
 		{
-			if( WaitingTime[j].process == processes[i] )
+			if( WaitingTime[j].process == processes[i] ){
+				WaitingTime[j].time = wait_time[i];
 				break;
+			}
 		}
 		if( WaitingTime[j].process == 0)
 		{
@@ -66,43 +68,70 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 	}
 }
 
+void calculateResponseTime( int processes[], int n, int burst_time[], int wait_time[], int rp_time[], struct SProcessTime *ResponseTime)
+{
+    // calculate tat by adding burst time and wait time
+    rp_time[0] = 0;
+    for (int i = 0; i < n ; i++)
+    {
+        rp_time[i] = burst_time[i-1] + wait_time[i-1];
+    }
+
+	// update the global struct which saves the per-process turnaround time
+	// logic is that if the entry is already there, then its updated
+	for( int i = 0; i < n; i++)
+	{
+		int j = 0;
+		for(; ResponseTime[j].process != 0; j++)
+		{
+			if( ResponseTime[j].process == processes[i] )
+			{
+				break;
+			}
+		}
+		if( ResponseTime[j].process == 0)
+		{
+			ResponseTime[j].process = processes[i];
+			ResponseTime[j].time = rp_time[i];
+		}
+	}
+}
 // function to calculate times according to FCFS
 void calculateFCFS( int n, int *processes, int *burst_time)
 {
-    int wait_time[n], turnaround_time[n], total_wt = 0, total_tat = 0;
-    int sum = 0;
+    int wait_time[n], turnaround_time[n], rp_time[n],total_rt = 0, total_wt = 0, total_tat = 0;
     double cpu = 100.00;
 	struct SProcessTime WaitingTime[MAX_PROCESSES];
 	struct SProcessTime TurnaroundTime[MAX_PROCESSES];
-
+	struct SProcessTime ResponseTime[MAX_PROCESSES];
 
 	memset( WaitingTime, 0, sizeof ( WaitingTime));
 	memset( TurnaroundTime, 0, sizeof( TurnaroundTime));
+	memset( ResponseTime, 0, sizeof( ResponseTime));
+
 
     calculateWaitingTime(processes, n, burst_time, wait_time, WaitingTime);
     calculateTurnAroundTime(processes, n, burst_time, wait_time, turnaround_time, TurnaroundTime);
-
+    calculateResponseTime(processes, n, burst_time, wait_time, rp_time, ResponseTime);
 
 	int total_processes = 0;
-	for( int i = 0; WaitingTime[i].process != *processes; i++){
-	sum = total_wt + WaitingTime[i].time;
-	}
 	for( int j = 0; WaitingTime[j].process != 0; j++)
 	{
-        total_wt = total_wt + WaitingTime[j].time;
+	total_wt = total_wt + WaitingTime[j].time;
         total_tat = total_tat + TurnaroundTime[j].time;
+	total_rt = total_rt + ResponseTime[j].time;
 	total_processes++;
 	}
 
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
    printf("%d\n", total_processes);
-   printf("%d\n", sum);
    printf("%.2f\n", cpu);
-   printf("%.2f\n", (double)total_processes / (double)total_wt);
+   printf("%.2f\n", (double)total_processes / (double)total_rt);
    printf("%.2f\n", (double)total_tat / (double)total_processes);
-   printf("%.2f\n", ((double)total_wt + 2)/ (double)total_processes);
-   printf("%.2f\n", (double)total_wt / (double)total_processes);
+   printf("%.2f\n", (double)total_wt/ (double)total_processes);
+  //change this to total_rt
+   printf("%.2f\n", (double)total_rt / (double)total_processes);
 }
 
 void readFile( FILE *fp, int *n, int **processes, int **burst_time)
