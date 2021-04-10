@@ -43,14 +43,14 @@ void calculateWaitingTime(int processes[], int n, int burst_time[], int wait_tim
 {
     // calculating waitingtime for all processes, even ones that are mentioned multiple times
     wait_time[0] = 0;
-    for (int i = 1; i < n ; i++)
+    for (int i = 0; i < n ; i++)
     {
         wait_time[i] =  burst_time[i-1] + wait_time[i-1];
     }
 
 	// update the global struct which saves the per-process waiting time
 	// logic is that if the entry is already there, then it is not updated
-	for( int i = 0; i < n; i++)
+	for( int i = 1; i < n; i++)
 	{
 		int j = 0;
 		for(; WaitingTime[j].process != 0; j++)
@@ -119,14 +119,16 @@ void calculateFCFS( int n, int *processes, int *burst_time)
 	for( int j = 0; WaitingTime[j].process != 0; j++)
 	{
 	total_wt = total_wt + WaitingTime[j].time;
-        total_tat = total_tat + TurnaroundTime[j].time;
+        //total_tat = total_tat + TurnaroundTime[j].time;
 	//total_rt = total_rt + ResponseTime[j].time;
-	total_processes++;
+	//total_processes+;
 	}
 
 	for(int j = 0; ResponseTime[j].process != 0; j++)
 	{
 	total_rt = total_rt + ResponseTime[j].time;
+	total_tat = total_tat + TurnaroundTime[j].time;
+	total_processes++;
 	}
    // printf("Average waiting time = %.2f\n", (float)total_wt / (float)total_processes);
    // printf("Average turn around time = %.2f\n", (float)total_tat / (float)total_processes);
